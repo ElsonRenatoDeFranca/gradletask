@@ -4,14 +4,16 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Document(collection = "customer")
-public class Customer {
+@ToString(exclude = {"id"})
+@Document(collection = "person")
+public class Person {
 
     @Id
     private String id;

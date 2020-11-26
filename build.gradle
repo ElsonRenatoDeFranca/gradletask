@@ -44,7 +44,8 @@ task mongoDbCleaner(type: JavaExec, dependsOn:[classes]) {
 	group = "Execution"
 	description = "Run the main class with JavaExecTask"
 	classpath = sourceSets.main.runtimeClasspath
-	main = 'com.example.gradletask.loader.MongoDbCleaner'
+	//main = 'com.example.gradletask.loader.MongoDbCleaner'
+	main = 'com.example.gradletask.GradletaskApplication'
 }
 
 
