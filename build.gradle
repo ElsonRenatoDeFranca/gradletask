@@ -29,10 +29,22 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
 }
 
 test {
 	useJUnitPlatform()
+}
+
+task mongoDbCleaner(type: JavaExec, dependsOn:[classes]) {
+	group = "Execution"
+	description = "Run the main class with JavaExecTask"
+	classpath = sourceSets.main.runtimeClasspath
+	main = 'com.example.gradletask.loader.MongoDbCleaner'
 }
 
 
