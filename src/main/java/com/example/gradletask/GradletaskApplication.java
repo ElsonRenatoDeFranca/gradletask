@@ -15,6 +15,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -36,6 +37,7 @@ import java.util.stream.Collectors;
 public class GradletaskApplication implements ApplicationRunner {
 
 	private final PersonService personService;
+	private StringBuilder connectionString = new StringBuilder();
 
 	@Autowired
 	public GradletaskApplication(PersonService personService) {
@@ -49,26 +51,31 @@ public class GradletaskApplication implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		boolean debug = args.containsOption("debug");
-		List<String> arguments = args.getNonOptionArgs();
-
+		//List<String> arguments = args.getNonOptionArgs();
+		args.getNonOptionArgs().stream().forEach(s -> this.setConnectionString(connectionString.append(s)));
+		System.out.println("STR: "+ connectionString.toString());
 
 		//databaseInfo.setConnectionDetails(arguments.get(0));
 		//mongodb://localhost:27017/umbler
 		System.out.println(debug);
-		System.out.println(arguments);
+		//System.out.println(arguments);
 		//System.out.println(databaseInfo);
 
 		//databaseInfo.setConnectionDetails("mongodb://localhost:27017/umbler");
-		
+
 
 		personService.findAll().stream().forEach(System.out::println);
-		Person person = new Person("Dwight","Eisenhower");
+		Person person = new Person("Dwight", "Eisenhower");
 		//personService.save(person);
 		personService.deleteAll();
 	}
 
+	@Bean
+	public DatabaseInfo databaseInfo() {
 
-
-
-
+		DatabaseInfo databaseInfo = new DatabaseInfo();
+		databaseInfo.setConnectionDetails(this.getConnectionString().toString());
+		System.out.println(databaseInfo);
+		return new DatabaseInfo();
+	}
 }

@@ -1,13 +1,13 @@
 package com.example.gradletask.config;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
 @ToString
 public class DatabaseInfo {
     private String connectionDetails;
