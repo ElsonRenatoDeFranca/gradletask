@@ -4,7 +4,7 @@ This project presents an introductory view about tasks on Gradle and allows the 
 
 # Usage:
 
-    > bradle build
+    > gradle build
 
     > gradle mongoDbCleaner --args="mongodb://<database_host>:<port>/<database_name>"
 
