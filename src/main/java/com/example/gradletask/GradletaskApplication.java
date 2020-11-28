@@ -2,6 +2,7 @@ package com.example.gradletask;
 
 import com.example.gradletask.config.DatabaseInfo;
 import com.example.gradletask.domain.Person;
+import com.example.gradletask.service.DatabaseInfoService;
 import com.example.gradletask.service.PersonService;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -31,18 +32,14 @@ import java.util.stream.Collectors;
 @EnableMongoRepositories(basePackages = "com.example.gradletask.repository")
 @ComponentScan({ "com.example.gradletask.config","com.example.gradletask.repository", "com.example.gradletask.service",
 		 "com.example.gradletask.domain" })
-@Configuration
 @Getter
 @Setter
 public class GradletaskApplication implements ApplicationRunner {
 
-	private final PersonService personService;
-	private StringBuilder connectionString = new StringBuilder();
+	private String urlConnection = "";
 
 	@Autowired
-	public GradletaskApplication(PersonService personService) {
-		this.personService = personService;
-	}
+	private PersonService personService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(GradletaskApplication.class, args);
@@ -50,32 +47,23 @@ public class GradletaskApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		boolean debug = args.containsOption("debug");
-		//List<String> arguments = args.getNonOptionArgs();
-		args.getNonOptionArgs().stream().forEach(s -> this.setConnectionString(connectionString.append(s)));
-		System.out.println("STR: "+ connectionString.toString());
+      	args.getNonOptionArgs().stream().forEach(this::setUrlConnection);
+        System.out.println("zzzzzzzzzzzzzzzzz:................."+urlConnection);
+        //ConnectionString connectionString = new ConnectionString("mongodb://localhost:27017/umbler");
+        ConnectionString connectionString = new ConnectionString(urlConnection);
 
-		//databaseInfo.setConnectionDetails(arguments.get(0));
-		//mongodb://localhost:27017/umbler
-		System.out.println(debug);
-		//System.out.println(arguments);
-		//System.out.println(databaseInfo);
+        MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
+				.applyConnectionString(connectionString)
+				.build();
+        //MongoClients.create(mongoClientSettings);
 
-		//databaseInfo.setConnectionDetails("mongodb://localhost:27017/umbler");
-
+		Person person = new Person("Dwight", "Eisenhower");
+		personService.save(person);
 
 		personService.findAll().stream().forEach(System.out::println);
-		Person person = new Person("Dwight", "Eisenhower");
-		//personService.save(person);
-		personService.deleteAll();
+
+
+
 	}
 
-	@Bean
-	public DatabaseInfo databaseInfo() {
-
-		DatabaseInfo databaseInfo = new DatabaseInfo();
-		databaseInfo.setConnectionDetails(this.getConnectionString().toString());
-		System.out.println(databaseInfo);
-		return new DatabaseInfo();
-	}
 }

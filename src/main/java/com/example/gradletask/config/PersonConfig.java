@@ -4,7 +4,6 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 @Setter
 public class PersonConfig {
 
-
-    @Bean
+    /*@Bean
     public MongoClient mongo() {
         ConnectionString connectionString = new ConnectionString("mongodb://localhost:27017/umbler");
         MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
@@ -34,7 +32,7 @@ public class PersonConfig {
     public MongoTemplate mongoTemplate() throws Exception {
         return new MongoTemplate(mongo(), "umbler");
     }
-
+*/
 
 
 }

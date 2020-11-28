@@ -45,23 +45,3 @@ task mongoDbCleaner(type: JavaExec, dependsOn:[classes]) {
 	classpath = sourceSets.main.runtimeClasspath
 	main = 'com.example.gradletask.GradletaskApplication'
 }
-
-
-task cleanUp {
-	doLast {
-		println 'Removing collectionA'
-	}
-}
-cleanUp.doFirst {
-	println 'Checking if collectionA exists'
-}
-cleanUp.configure {
-	doLast {
-		println 'Checking if collectionB exists'
-	}
-}
-cleanUp.configure {
-	doLast {
-		println 'Removing collectionB '
-	}
-}
