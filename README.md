@@ -12,6 +12,8 @@ This project presents an introductory view about tasks on Gradle and allows the 
      port = 27017
      database_name = umbler
 
+     example: "mongodb://localhost:27017/umbler" 
+     
      task mongoDbCleaner(type: JavaExec, dependsOn:[classes]) {
 	 group = "Execution"
 	 description = "Run the main class with JavaExecTask"
