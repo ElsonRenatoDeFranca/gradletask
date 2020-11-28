@@ -34,8 +34,8 @@ public class GradletaskApplication implements ApplicationRunner {
         connectToDatabase(this.urlConnection);
 		Person person = new Person("Thomas", "Jefferson");
 		personService.save(person);
-		//searchAll();
-		//deleteAll();
+		searchAll();
+		deleteAll();
 	}
 
 	private void connectToDatabase(String databaseUrl){
