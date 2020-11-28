@@ -11,23 +11,14 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.stereotype.Component;
-
 @Service
 @Slf4j
 public class PersonServiceImpl implements PersonService {
 
-    private final MongoOperations mongoOperations;
     private final PersonRepository personRepository;
 
     @Autowired
-    public PersonServiceImpl(MongoOperations mongoOperations, PersonRepository personRepository) {
-        this.mongoOperations = mongoOperations;
+    public PersonServiceImpl(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 
@@ -44,7 +35,6 @@ public class PersonServiceImpl implements PersonService {
     public void deleteAll(){
         log.info("Deleting collections from MongoDb \n\n");
         personRepository.deleteAll();
-        //mongoOperations.remove(new Query(), entityInformation.getCollectionName());
         log.info("Removal completed \n\n");
     }
 
